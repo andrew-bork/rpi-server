@@ -1,6 +1,6 @@
 #!/bin/sh
 
-while [1]
+while [ 1 -eq 1 ]
 then
   sudo ./$1/load.sh $1
   sudo ./$1/run.sh $1

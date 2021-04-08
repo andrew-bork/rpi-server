@@ -9,3 +9,5 @@ mv rpi-server/client/* client
 mv rpi-server/* .
 
 rm -rf rpi-server
+
+chmod 777 load.sh run.sh

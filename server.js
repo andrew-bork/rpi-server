@@ -28,8 +28,14 @@ app.get("/style.css", (req, res) => {
 });
 
 app.get("/process/new", (req, res) => {
+
     if (req.query.name && req.query.cmd) {
-        console.log(req.query.name);
+        if (processes.find((process) => (process.name === req.query.name))) {
+            res.send(JSON.stringify({
+                success: false,
+            }));
+            return;
+        }
         res.send(JSON.stringify({
             success: true,
             name: req.query.name,
@@ -46,6 +52,7 @@ app.get("/process/new", (req, res) => {
         });
         command.stdout.on("data", (data) => {
             processes[i].stdout += data;
+            io.emit(`${req.query.name}-stdout-add`, data);
         });
         command.stderr.on("data", (data) => {
             processes[i].stderr += data;

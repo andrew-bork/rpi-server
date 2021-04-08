@@ -1,4 +1,4 @@
-#!bin/sh
+#!/bin/sh
 
 npm install express
 npm install https

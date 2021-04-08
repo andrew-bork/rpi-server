@@ -60,6 +60,7 @@ app.get("/process/new", (req, res) => {
 
 app.get("/stop", (req, res) => {
     res.send(JSON.stringify({ success: true }));
+    console.log("stopping");
     server.close();
 });
 
@@ -75,3 +76,7 @@ app.post("/update/client", (req, res) => {
 const server = app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 });
+
+server.on("close", () => {
+    console.log("stopped");
+})

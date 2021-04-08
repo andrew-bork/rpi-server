@@ -10,4 +10,4 @@ mv $1/rpi-server/* $1/.
 
 rm -rf $1/rpi-server
 
-chmod 777 $1/load.sh $1/run.sh
+chmod 777 $1/load.sh $1/run.sh $1/reboot.sh

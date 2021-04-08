@@ -61,7 +61,7 @@ app.get("/process/new", (req, res) => {
 app.get("/stop", (req, res) => {
     res.send(JSON.stringify({ success: true }));
     console.log("stopping");
-    process.kill();
+    process.kill(process.pid, "SIGTERM");
 });
 
 app.get("/process/view", (req, res) => {

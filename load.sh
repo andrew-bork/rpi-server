@@ -1,13 +1,13 @@
 #!/bin/sh
 
-rm -rf *
+rm -rf $1/*
 
-git clone https://github.com/andrew-bork/rpi-server/
+git clone https://github.com/andrew-bork/rpi-server/ $1/rpi-server
 
-mkdir client
-mv rpi-server/client/* client
-mv rpi-server/* .
+mkdir $1/client
+mv $1/rpi-server/client/* $1/client
+mv $1/rpi-server/* $1/.
 
-rm -rf rpi-server
+rm -rf $1/rpi-server
 
-chmod 777 load.sh run.sh
+chmod 777 $1/load.sh $1/run.sh

@@ -2,6 +2,8 @@ const express = require("express");
 const https = require("https");
 const fs = require("fs");
 
+const socketio = require("socket.io");
+
 const { spawn, exec } = require("child_process");
 
 const port = 443;
@@ -12,6 +14,7 @@ const style = fs.readFileSync("./client/style.css").toString();
 
 
 var processes = []
+var io;
 
 const app = express();
 app.get("/", (req, res) => {
@@ -53,6 +56,8 @@ app.get("/process/new", (req, res) => {
         command.on("close", (code) => {
             console.log(processes[i].stdout, "\nCode: ", code);
         })
+
+        io.emit("process-list-update", processes);
         return;
     }
     req.send(JSON.stringify({ success: false }));
@@ -76,7 +81,9 @@ app.post("/update/client", (req, res) => {
 const server = app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 
-    server.on("close", () => {
-        console.log("stopped");
+    io = socketio(server);
+
+    io.on("connection", (socket) => {
+
     });
 });

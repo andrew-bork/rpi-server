@@ -1,5 +1,6 @@
 const e = React.createElement;
 
+const socket = io();
 
 class MainPage extends React.Component {
 
@@ -17,7 +18,9 @@ class MainPage extends React.Component {
             })
         });
 
-
+        socket.on("process-list-update", (processes) => {
+            this.setState({ process_list: processes });
+        })
     }
 
     render() {

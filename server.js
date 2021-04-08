@@ -32,7 +32,7 @@ app.get("/process/new", (req, res) => {
             name: req.query.name,
         }));
 
-        const command = spawn("ls", ["C://", "-ls"]);
+        const command = spawn("echo", ["fuck me"]);
         const i = processes.length;
         processes.push({
             name: req.query.name,
@@ -58,6 +58,11 @@ app.get("/process/new", (req, res) => {
     req.send(JSON.stringify({ success: false }));
 });
 
+app.get("/stop", (req, res) => {
+    res.send(JSON.stringify({ success: true }));
+    server.close();
+});
+
 app.get("/process/view", (req, res) => {
     res.send(JSON.stringify({ processes: processes }));
 });
@@ -67,6 +72,6 @@ app.post("/update/client", (req, res) => {
         fs.writeFileSync("./client/script.js", req.body.script);
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 });

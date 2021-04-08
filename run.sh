@@ -2,7 +2,6 @@
 
 cd $1
 
-npm install express
-npm install https
+npm install
 
 node server.js

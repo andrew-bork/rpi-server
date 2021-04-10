@@ -41,7 +41,7 @@ app.get("/process/new", (req, res) => {
             name: req.query.name,
         }));
 
-        const command = spawn("echo", ["fuck me"]);
+        const command = spawn("echo fuck me");
         const i = processes.length;
         processes.push({
             name: req.query.name,
@@ -52,7 +52,7 @@ app.get("/process/new", (req, res) => {
         });
         command.stdout.on("data", (data) => {
             processes[i].stdout += data;
-            io.emit(`${req.query.name}-stdout-add`, data);
+            io.emit(`stdout-add`, { process: req.query.name, add: data });
         });
         command.stderr.on("data", (data) => {
             processes[i].stderr += data;

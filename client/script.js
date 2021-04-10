@@ -193,12 +193,12 @@ class NewProcessTab extends React.Component {
         return e("div", { className: "fancy" },
             e("div", { className: "header" }, "New Process"),
             e("div", { className: "fancy-input", style: { width: "30em" } },
-                e("input", { id: "name", autocomplete: "off", required: true }),
-                e("label", { for: "name" }, "Process Name")
+                e("input", { id: "name", autoComplete: "off", required: true }),
+                e("label", { htmlFor: "name" }, "Process Name")
             ),
             e("div", { className: "fancy-input", style: { width: "30em" } },
-                e("input", { id: "cmd", autocomplete: "off", required: true }),
-                e("label", { for: "cmd" }, "Process Command")
+                e("input", { id: "cmd", autoComplete: "off", required: true }),
+                e("label", { htmlFor: "cmd" }, "Process Command")
             ),
             e("br"),
             e("button", {}, "Create", e("div")));

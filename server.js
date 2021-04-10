@@ -41,7 +41,9 @@ app.get("/process/new", (req, res) => {
             name: req.query.name,
         }));
 
-        const command = spawn("echo fuck me");
+        const bruh = "echo cunt".match(/".+"|[^\s]+/g);
+
+        const command = spawn(bruh.shift(), bruh);
         const i = processes.length;
         processes.push({
             name: req.query.name,

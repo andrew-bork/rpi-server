@@ -80,7 +80,7 @@ app.get("/stop", (req, res) => {
 
 app.get("/process/view", (req, res) => {
     if (req.query.process) {
-        const found = processes.find((process) => process.name === req.query.process);
+        const found = processes.find((process) => process.name === req.query.process)[0];
         if (found)
             res.send(JSON.stringify({ success: true, process: found }));
         else

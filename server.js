@@ -41,7 +41,7 @@ app.get("/process/new", (req, res) => {
             name: req.query.name,
         }));
 
-        const bruh = "echo cunt".match(/".+"|[^\s]+/g);
+        const bruh = req.query.cmd.match(/".+"|[^\s]+/g);
 
         const command = spawn(bruh.shift(), bruh);
         const i = processes.length;
@@ -82,7 +82,7 @@ app.get("/process/view", (req, res) => {
     if (req.query.process) {
         const found = processes.find((process) => process.name === req.query.process);
         if (found)
-            res.send(JSON.stringify({ success: true, stdout: found.stdout }));
+            res.send(JSON.stringify({ success: true, process: found }));
         else
             res.send(JSON.stringify({ success: false }));
     } else {

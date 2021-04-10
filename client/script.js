@@ -47,7 +47,8 @@ class MainPage extends React.Component {
                                 this.setState({ tab: 1, selected_process: data.name });
                                 fetch(`/process/view?name=${encodeURIComponent(data.name)}`).then((response) => {
                                     response.json().then((data) => {
-                                        this.setState({ stdout: data.stdout });
+                                        console.log(data);
+                                        //this.setState({ stdout: data.stdout });
                                     })
                                 });
                             }
@@ -76,7 +77,8 @@ class MainPage extends React.Component {
                                 this.setState({ selected_process: process.name, tab: 1 });
                                 fetch(`/process/view?name=${encodeURIComponent(process.name)}`).then((response) => {
                                     response.json().then((data) => {
-                                        this.setState({ stdout: data.stdout });
+                                        console.log(data);
+                                        //this.setState({ stdout: data.stdout });
                                     })
                                 });
                             }
@@ -179,6 +181,9 @@ class Console extends React.Component {
     }
 
     render() {
+        if (this.props.stdout) {
+            return null;
+        }
         return e("div", { className: "stdout" },
             e("div", {},
                 e("span", {}, "zsh / $"),

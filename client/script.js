@@ -10,6 +10,7 @@ class MainPage extends React.Component {
         this.state = {
             selected_process: null,
             process_list: null,
+            tab: 0,
         };
 
         fetch("/process/view", { method: "GET" }).then((res) => {
@@ -24,6 +25,14 @@ class MainPage extends React.Component {
     }
 
     render() {
+
+        var rendered = e("div", {}, "bruh conk");
+        if (this.state.tab === 1) {
+            rendered = e(Console, { process: (this.state.selected_process !== null ? this.state.process_list[this.state.selected_process] : null) });
+        } else if (this.state.tab === 2) {
+            rendered = e(NewProcessTab, {});
+        }
+
         return e("div", {
                 id: "process-view",
                 className: ""
@@ -40,7 +49,7 @@ class MainPage extends React.Component {
                             idle: process.idle,
                             current_command: process.current_command,
                             action: () => {
-                                this.setState({ selected_process: i });
+                                this.setState({ selected_process: i, tab: 1 });
                             }
                         }
                     }) : [])
@@ -56,7 +65,7 @@ class MainPage extends React.Component {
                     icon: icons.add,
                     flyout: false,
                     action: () => {
-
+                        this.setState({ tab: 2 });
                     }
                 }, {
                     name: "Restart Server",
@@ -67,7 +76,7 @@ class MainPage extends React.Component {
                     }
                 }]
             }),
-            e(Console, { process: (this.state.selected_process !== null ? this.state.process_list[this.state.selected_process] : null) })
+            rendered
         );
     }
 }
@@ -157,6 +166,44 @@ class Console extends React.Component {
 }
 
 
+
+
+class NewProcessTab extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        /**
+         * <div class="fancy">
+        <div class="header">New Process</div>
+        <div class="fancy-input" style="width: 30em;">
+            <input id="name" required autocomplete="off">
+            <label for="name">Process Name</label>
+        </div>
+        <div class="fancy-input" style="width: 30em;">
+            <input id="cmd" required autocomplete="off">
+            <label for="cmd">Process Command</label>
+        </div>
+        <br>
+        <button>Create<div></div></button>
+    </div>
+         */
+
+        return e("div", { className: "fancy" },
+            e("div", { className: "header" }, "New Process"),
+            e("div", { className: "fancy-input", style: { width: "30em" } },
+                e("input", { id: "name", autocomplete: "off", required: true }),
+                e("label", { for: "name" }, "Process Name")
+            ),
+            e("div", { className: "fancy-input", style: { width: "30em" } },
+                e("input", { id: "cmd", autocomplete: "off", required: true }),
+                e("label", { for: "cmd" }, "Process Command")
+            ),
+            e("br"),
+            e("button", {}, "Create", e("div")));
+    }
+}
 
 
 

@@ -30,7 +30,19 @@ class MainPage extends React.Component {
         if (this.state.tab === 1) {
             rendered = e(Console, { process: (this.state.selected_process !== null ? this.state.process_list[this.state.selected_process] : null) });
         } else if (this.state.tab === 2) {
-            rendered = e(NewProcessTab, {});
+            rendered = e(NewProcessTab, {
+                action: () => {
+                    const name = document.getElementById("name").value;
+                    const cmd = document.getElementById("cmd").value;
+
+                    fetch(`/process/new?name=${encodeURIComponent(name)}&cmd=${encodeURIComponent(cmd)}`, { method: "GET" }).then(
+                        (response) =>
+                        response.json().then((data) => {
+
+                        })
+                    )
+                }
+            });
         }
 
         return e("div", {
@@ -201,7 +213,7 @@ class NewProcessTab extends React.Component {
                 e("label", { htmlFor: "cmd" }, "Process Command")
             ),
             e("br"),
-            e("button", {}, "Create", e("div")));
+            e("button", { onClick: () => { this.props.action(); } }, "Create", e("div")));
     }
 }
 

@@ -48,7 +48,7 @@ class MainPage extends React.Component {
                                 fetch(`/process/view?name=${encodeURIComponent(data.name)}`).then((response) => {
                                     response.json().then((data) => {
                                         console.log(data);
-                                        //this.setState({ stdout: data.stdout });
+                                        this.setState({ stdout: data.process.stdout });
                                     })
                                 });
                             }
@@ -78,7 +78,7 @@ class MainPage extends React.Component {
                                 fetch(`/process/view?name=${encodeURIComponent(process.name)}`).then((response) => {
                                     response.json().then((data) => {
                                         console.log(data);
-                                        //this.setState({ stdout: data.stdout });
+                                        this.setState({ stdout: data.process.stdout });
                                     })
                                 });
                             }

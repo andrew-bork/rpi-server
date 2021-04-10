@@ -181,7 +181,7 @@ class Console extends React.Component {
     }
 
     render() {
-        if (this.props.stdout) {
+        if (!this.props.stdout) {
             return null;
         }
         return e("div", { className: "stdout" },

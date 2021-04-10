@@ -179,6 +179,87 @@
             background: none;
             border: none;
         }
+        
+        .header {
+            font-size: 36px;
+            font-weight: 600;
+        }
+        
+        input {
+            background-color: #00000000;
+            outline: none;
+            border: none;
+        }
+        
+        .fancy-input {
+            margin-top: 2em;
+            margin-bottom: 10px;
+            position: relative;
+            font-size: 24px;
+        }
+        
+        .fancy-input label {
+            top: 0;
+            left: 0;
+            position: absolute;
+            transform: none;
+            transition: font-size .3s, transform .3s, color .3s, opacity .3s;
+            font-size: 24px;
+            opacity: 0.8;
+            color: #fdfdfd;
+        }
+        
+        .fancy-input input {
+            font-size: 24px;
+            border-bottom: 2px solid #764ea3;
+            transition: all .3s;
+            width: 100%;
+        }
+        
+        .fancy-input input:valid+label,
+        .fancy-input input:focus+label {
+            color: #35a3c5;
+            transform: translateY(-110%);
+            font-size: 16px;
+            opacity: 1;
+        }
+        
+        .fancy-input input:valid,
+        .fancy-input input:focus {
+            border-color: #35a3c5;
+        }
+        
+        button {
+            border: none;
+            background: none;
+            outline: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .fancy button {
+            font-size: 24px;
+            font-weight: 600;
+            color: #43ca69;
+            position: relative;
+            transition: all .3s;
+        }
+        
+        .fancy button div {
+            margin-top: 2px;
+            width: 0%;
+            transition: all .3s;
+            height: 2px;
+            background-image: linear-gradient(to right, #35a3c5, #75f355);
+        }
+        
+        .fancy button:hover div {
+            width: 100%;
+        }
+        
+        .fancy {
+            padding: 20px;
+        }
     </style>
 
     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>

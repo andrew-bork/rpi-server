@@ -45,7 +45,7 @@ class MainPage extends React.Component {
                         response.json().then((data) => {
                             if (data.success) {
                                 this.setState({ tab: 1, selected_process: data.name });
-                                fetch(`/process/view?name=${encodeURIComponent(data.name)}`).then((response) => {
+                                fetch(`/process/view?process=${encodeURIComponent(data.name)}`).then((response) => {
                                     response.json().then((data) => {
                                         console.log(data);
                                         this.setState({ stdout: data.process.stdout });
@@ -75,7 +75,7 @@ class MainPage extends React.Component {
                             current_command: process.current_command,
                             action: () => {
                                 this.setState({ selected_process: process.name, tab: 1 });
-                                fetch(`/process/view?name=${encodeURIComponent(process.name)}`).then((response) => {
+                                fetch(`/process/view?process=${encodeURIComponent(process.name)}`).then((response) => {
                                     response.json().then((data) => {
                                         console.log(data);
                                         this.setState({ stdout: data.process.stdout });

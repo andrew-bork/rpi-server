@@ -11,6 +11,7 @@ class MainPage extends React.Component {
             selected_process: null,
             process_list: null,
             tab: 0,
+            stdout: "",
         };
 
         fetch("/process/view", { method: "GET" }).then((res) => {
@@ -22,13 +23,17 @@ class MainPage extends React.Component {
         socket.on("process-list-update", (processes) => {
             this.setState({ process_list: processes });
         })
+
+        socket.on("stdout-add", (data) => {
+            this.setState({ stdout: this.state.stdout + data });
+        });
     }
 
     render() {
 
         var rendered = e("div", {}, "bruh conk");
         if (this.state.tab === 1) {
-            rendered = e(Console, { process: (this.state.selected_process !== null ? this.state.process_list[this.state.selected_process] : null) });
+            rendered = e(Console, { stdout: this.state.stdout });
         } else if (this.state.tab === 2) {
             rendered = e(NewProcessTab, {
                 action: () => {
@@ -38,7 +43,14 @@ class MainPage extends React.Component {
                     fetch(`/process/new?name=${encodeURIComponent(name)}&cmd=${encodeURIComponent(cmd)}`, { method: "GET" }).then(
                         (response) =>
                         response.json().then((data) => {
-
+                            if (data.success) {
+                                this.setState({ tab: 1, selected_process: data.name });
+                                fetch(`/view/process?name=${encodeURIComponent(data.name)}`).then((response) => {
+                                    response.json().then((data) => {
+                                        this.setState({ stdout: data.stdout });
+                                    })
+                                });
+                            }
                         })
                     )
                 }
@@ -61,7 +73,12 @@ class MainPage extends React.Component {
                             idle: process.idle,
                             current_command: process.current_command,
                             action: () => {
-                                this.setState({ selected_process: i, tab: 1 });
+                                this.setState({ selected_process: process.name, tab: 1 });
+                                fetch(`/view/process?name=${encodeURIComponent(process.name)}`).then((response) => {
+                                    response.json().then((data) => {
+                                        this.setState({ stdout: data.stdout });
+                                    })
+                                });
                             }
                         }
                     }) : [])
@@ -162,15 +179,12 @@ class Console extends React.Component {
     }
 
     render() {
-        if (!this.props.process) {
-            return e("h2", {}, "Select a process")
-        }
         return e("div", { className: "stdout" },
             e("div", {},
                 e("span", {}, "zsh / $"),
                 e("input", {})
             ),
-            this.props.process.stdout.split("\n").map((line, i) => {
+            this.props.stdout.split("\n").map((line, i) => {
                 return e("div", { key: i }, line);
             })
         );

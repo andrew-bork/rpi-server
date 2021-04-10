@@ -79,7 +79,15 @@ app.get("/stop", (req, res) => {
 });
 
 app.get("/process/view", (req, res) => {
-    res.send(JSON.stringify({ processes: processes }));
+    if (req.query.process) {
+        const found = processes.find((process) => process.name === req.query.process);
+        if (found)
+            res.send(JSON.stringify({ success: true, stdout: found.stdout }));
+        else
+            res.send(JSON.stringify({ success: false }));
+    } else {
+        res.send(JSON.stringify({ processes: processes }));
+    }
 });
 
 app.post("/update/client", (req, res) => {
